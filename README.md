@@ -1,7 +1,7 @@
 # Programa visualizador de shaders
 
 Opción E de la segunda tarea del curso CC7515-1 - Computación en GPU
-del departamento de computación de la Universidad de Chile.
+del departamento de computación de la Universidad de Chile, "Programa visualizador de shaders", desarrollada por el alumno Heinich Porro, entre agosto y septiembre del año 2019.
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ del departamento de computación de la Universidad de Chile.
 
 ## Versionamiento
 
-Se usó git para mantener un historial del desarrollo de la tarea. El repositorio está hosteado en github en un repositorio privado.
+Se usó git para mantener un historial del desarrollo de la tarea. El repositorio está hosteado en github en el repositorio [https://github.com/hporro/Tarea2GPU](https://github.com/hporro/Tarea2GPU) (repositorio privado hasta terminar la tarea).
 
 ## Autor
 
