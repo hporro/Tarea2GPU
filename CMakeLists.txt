@@ -8,7 +8,7 @@ include_directories(libs/glfw-3.3/include)
 include_directories(libs/glad/include)
 include_directories(libs/glm)
 
-add_executable(Tarea2 libs/glad/src/glad.c src/main.cpp src/Shader.h src/stb_image.h src/Camera.h src/Cube.h src/Texture.h src/Lamp.h)
+add_executable(Tarea2 libs/glad/src/glad.c src/main.cpp src/Shader.h src/stb_image.h src/Camera.h src/Cube.h src/Texture.h src/Lamp.h src/Bunny.h)
 target_link_libraries(Tarea2 glfw ${GLFW_LIBRARIES})
 
 add_executable(PLAYGROUND libs/glad/src/glad.c src/playground.cpp src/Shader.h src/stb_image.h)
