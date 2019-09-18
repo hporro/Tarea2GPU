@@ -8,7 +8,7 @@
 #ifndef LEARNOPENGL_LAMP_H
 #define LEARNOPENGL_LAMP_H
 
-#include "Cube.h"
+#include "../Model.h"
 
 namespace LAMP{
     float vertices[] = {
@@ -56,10 +56,11 @@ namespace LAMP{
     };
 }
 
-class Lamp : public Cube{
+class Lamp : public Model{
 public:
     Lamp(glm::vec3 position);
     void setPos(glm::vec3 position);
+    void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
 protected:
 private:
 };
@@ -87,6 +88,13 @@ void Lamp::setPos(glm::vec3 position){
     modelTransform = glm::scale(modelTransform, glm::vec3(0.1f));
 }
 
+void Lamp::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {
+    shader.setMat4("model", modelTransform);
+    shader.setMat4("view", viewTransform);
+    shader.setMat4("projection", projectionTransform);
+
+    glDrawArrays(GL_TRIANGLES, 0, 36);
+}
 
 #endif //LEARNOPENGL_LAMP_H
 

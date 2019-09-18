@@ -5,8 +5,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Texture.h"
-#include "Shader.h"
+#include "../Texture.h"
+#include "../Shader.h"
 
 class Bunny{
 public:
@@ -23,21 +23,19 @@ protected:
 };
 
 Bunny::Bunny(glm::vec3 position) {
-    char *bunnyPath = "../resources/bun_zipper.ply";
-    std::string bunnyString;
+    char *bunnyPath = "../resources/bun_zipper_simplified.txt";
     std::ifstream bunnyFile;
     bunnyFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try {
         bunnyFile.open(bunnyPath);
-        std::stringstream bunnyStream;
-        bunnyStream << bunnyFile.rdbuf();
+        int vertexNumber; bunnyFile >> vertexNumber;
+        std::cout << vertexNumber << std::endl;
         bunnyFile.close();
-        bunnyString = bunnyStream.str();
     }
     catch (std::ifstream::failure e) {
         std::cout << "ERROR::BUNNY::Bunny files not found" << std::endl;
     }
-    // TODO terminar esto
+
 }
 
 void Bunny::translate(glm::vec3 translation) {

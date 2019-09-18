@@ -23,7 +23,7 @@ del departamento de computación de la Universidad de Chile, "Programa visualiza
 
 ## Versionamiento
 
-Se usó git para mantener un historial del desarrollo de la tarea. El repositorio está hosteado en github en el repositorio [https://github.com/hporro/Tarea2GPU](https://github.com/hporro/Tarea2GPU) (repositorio privado hasta terminar la tarea).
+Se usó git para mantener un historial del desarrollo de la tarea. El repositorio está hosteado en [https://github.com/hporro/Tarea2GPU](https://github.com/hporro/Tarea2GPU) (repositorio privado hasta terminar la tarea).
 
 ## Autor
 

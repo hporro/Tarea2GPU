@@ -67,7 +67,7 @@ for line in bunnyRead:
         break
 
 for i in range(new_vertex_total):
-    string = new_vertices[i][0]+' '+new_vertices[i][1]+' '+new_vertices[i][2]+' '+new_vertices[i][3]+' '+new_vertices[i][4]+' '+new_vertices[5][1] + '\n'
+    string = new_vertices[i][0]+' '+new_vertices[i][1]+' '+new_vertices[i][2]#+' '+new_vertices[i][3]+' '+new_vertices[i][4]+' '+new_vertices[5][1] + '\n'
     bunnyWrite.write(string)
 
 bunnyRead.close()

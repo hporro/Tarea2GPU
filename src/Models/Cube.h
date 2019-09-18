@@ -7,8 +7,9 @@
 
 #include <GLFW/glfw3.h>
 
-#include "Shader.h"
-#include "Texture.h"
+#include "../Shader.h"
+#include "../Texture.h"
+#include "../Model.h"
 
 namespace CUBE{
     float verticesNormal[] = {
@@ -99,31 +100,11 @@ namespace CUBE{
     };
 }
 
-class Cube{
+class Cube : public Model {
 public:
     Cube();
-    explicit Cube(glm::vec3 position);
-
-    void rotate(float angle, glm::vec3 direction);
-    void translate(glm::vec3 translation);
-    void setPos(glm::vec3 position);
-
-    void bind();
-    static void unbind();
-
-    void draw(glm::mat4 projectionTransform, glm::mat4 viewTransform);
-
-    void addTexture(Texture tex, char *textureName);
-    void setShader(Shader cubeShader);
-protected:
-    glm::mat4 modelTransform;
-    unsigned int VAO = 0;
-    unsigned int VBO = 0;
-    Shader shader;
-    std::vector<Texture> textures;
-    std::vector<char *> textureNames;
-
-    void bindTextures();
+    Cube(glm::vec3 position);
+    void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
 };
 
 void Cube::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {
@@ -132,19 +113,6 @@ void Cube::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {
     shader.setMat4("projection", projectionTransform);
 
     glDrawArrays(GL_TRIANGLES, 0, 36);
-}
-
-void Cube::rotate(float angle, glm::vec3 direction) { //angle in radians
-    modelTransform = glm::rotate(modelTransform, angle, direction);
-}
-
-void Cube::translate(glm::vec3 translation){
-    modelTransform = glm::translate(modelTransform, translation);
-}
-
-void Cube::setPos(glm::vec3 position){
-    modelTransform = glm::mat4(1.0f);
-    modelTransform = glm::translate(modelTransform, position);
 }
 
 Cube::Cube(glm::vec3 position) {
@@ -168,32 +136,6 @@ Cube::Cube(glm::vec3 position) {
 
 Cube::Cube(){
     Cube(glm::vec3(0.0f,0.0f,0.0f));
-}
-
-void Cube::setShader(Shader cubeShader) {
-    shader = cubeShader;
-}
-
-void Cube::bind(){
-    glBindVertexArray(VAO);
-    shader.use();
-    bindTextures();
-}
-
-void Cube::unbind(){
-    glBindVertexArray(0);
-}
-
-void Cube::addTexture(Texture tex, char *textureName) {
-    textures.push_back(tex);
-    textureNames.push_back(textureName);
-}
-
-void Cube::bindTextures() { //binds textures and also set them to the shader
-    for(int i=0;i<textures.size();i++){
-        textures[i].bind(GL_TEXTURE0+i);
-        shader.setInt(textureNames[i], i);
-    }
 }
 
 #endif //LEARNOPENGL_CUBE_H
