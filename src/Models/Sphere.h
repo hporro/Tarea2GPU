@@ -15,10 +15,6 @@
 #include "../Model.h"
 
 namespace SPHERE {
-#define SQRT3 1.7320508076
-#define SQRT6 2.4494897428
-#define EPS 0.0000001
-
     float StartingVertices[] = {
             -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
             0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -61,13 +57,6 @@ namespace SPHERE {
             0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
             -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
             -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-            /*
-            -0.5,0.0,-SQRT3/6.0,
-            0.5,0.0,-SQRT3/6.0,
-            0.0,0.0,SQRT3/3.0,
-            0.0,2*SQRT6/6.0,0,
-            0.0,-2*SQRT6/6.0,0,
-             */
     };
 
     glm::vec3 calcNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
@@ -105,22 +94,8 @@ namespace SPHERE {
     }
 
     Triangle normTriangle(Triangle t, glm::vec3 center, float rad){
-        /*
-         function normalize(a, b, length):
-            #get the distance between a and b along the x and y axes
-            dx = b.x - a.x
-            dy = b.y - a.y
-            #right now, sqrt(dx^2 + dy^2) = distance(a,b).
-            #we want to modify them so that sqrt(dx^2 + dy^2) = the given length.
-            dx = dx * length / distance(a,b)
-            dy = dy * length / distance(a,b)
-            point c =  new point
-            c.x = a.x + dx
-            c.y = a.y + dy
-            return c
-        */
-
         Triangle nt;
+        //normalize the distance from the center of the sphere to each vertex of the triangle
         nt.a = center + (center-t.a)*rad/glm::distance(center,t.a);
         nt.b = center + (center-t.b)*rad/glm::distance(center,t.b);
         nt.c = center + (center-t.c)*rad/glm::distance(center,t.c);
