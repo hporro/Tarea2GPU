@@ -8,7 +8,7 @@
 #include "../Texture.h"
 #include "../Shader.h"
 
-class Bunny{
+class Bunny : public Figure {
 public:
     Bunny() = default;
     explicit Bunny(glm::vec3 position);

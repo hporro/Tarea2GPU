@@ -8,7 +8,8 @@ include_directories(libs/glfw-3.3/include)
 include_directories(libs/glad/include)
 include_directories(libs/glm)
 
-set(SOURCES src/main.cpp src/Shader.h src/stb_image.h src/Camera.h src/Models/Cube.h src/Texture.h src/Models/Lamp.h src/Models/Bunny.h src/Models/Tetrahedron.h)
+set(MODELS src/Models/Cube.h src/Models/Lamp.h src/Models/Bunny.h src/Models/Tetrahedron.h src/Models/Piramid.h src/Models/Sphere.h)
+set(SOURCES src/main.cpp src/Shader.h src/stb_image.h src/Camera.h src/Texture.h ${MODELS})
 set(LIBS libs/glad/src/glad.c)
 
 add_executable(Tarea2 ${LIBS} ${SOURCES})

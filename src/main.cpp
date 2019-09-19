@@ -1,4 +1,3 @@
-#include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -6,13 +5,19 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <iostream>
+
 #include "Shader.h"
 #include "Camera.h"
-#include "Models/Cube.h"
-#include "Models/Lamp.h"
-#include "Models/Bunny.h"
 #include "Model.h"
+
+#include "Models/Lamp.h"
+#include "Models/Cube.h"
 #include "Models/Tetrahedron.h"
+#include "Models/Piramid.h"
+#include "Models/Bunny.h"
+#include "Models/Sphere.h"
+#include "Figure.h"
 
 void global_config();
 void framebuffer_size_callback(GLFWwindow* glfWwindow, int width, int height);
@@ -41,7 +46,7 @@ float lastFrame = 0.0f; // Time of last frame
 int main() {
     global_config();
 
-    Tetrahedron fig = Tetrahedron(glm::vec3(0.0f,0.0f,0.0f));
+    Sphere fig = Sphere(glm::vec3(0.0f,0.0f,0.0f));
     //fig.rotate(0.4, glm::vec3(0.0,-1.0f,-0.5f));
     Shader phongShader = Shader("../src/shaders/phong.vert", "../src/shaders/phong.frag");
     //fig.setShader(Shader("../src/shaders/vertex.vert","../src/shaders/fragment.frag"));

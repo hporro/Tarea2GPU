@@ -10,6 +10,7 @@
 #include "../Shader.h"
 #include "../Texture.h"
 #include "../Model.h"
+#include "../Figure.h"
 
 namespace CUBE{
     float verticesNormal[] = {
@@ -100,7 +101,7 @@ namespace CUBE{
     };
 }
 
-class Cube : public Model {
+class Cube : public Figure {
 public:
     Cube();
     Cube(glm::vec3 position);

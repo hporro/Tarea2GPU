@@ -11,24 +11,38 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../Model.h"
+#include "../Figure.h"
 
 namespace TETRAHEDRON {
+#define SQRT3 1.7320508076
+#define SQRT6 2.4494897428
     float verticesNormal[] = {
-        -0.5, -0.5, -0.5, 0, -0.447214, 0.894427,
-         0.5, -0.5, -0.5, -0.872872, -0.218218, -0.436436,
-         0.0, -0.5, 0.5, 0.872872, -0.218218, -0.436436,
-         0.0,  0.5,  0.0, 0, 1, 0,
-    };
-    unsigned int indices[] = {
-        0,1,3,
-        1,2,3,
-        2,0,3,
-        0,2,1,
+        -0.5,0.0,-SQRT3/6.0,-0, 0.333333, -0.942809,
+        0.5,0.0,-SQRT3/6.0,-0, 0.333333, -0.942809,
+        0.0,2*SQRT6/6.0,0,-0, 0.333333, -0.942809,
+
+        0.5,0.0,-SQRT3/6.0,0.816497, 0.333333, 0.471405,
+        0.0,0.0,SQRT3/3.0,0.816497, 0.333333, 0.471405,
+        0.0,2*SQRT6/6.0,0,0.816497, 0.333333, 0.471405,
+
+        0.0,0.0,SQRT3/3.0,-0.816497, -0.333333, -0.471405,
+        -0.5,0.0,-SQRT3/6.0,-0.816497, -0.333333, -0.471405,
+        0.0,2*SQRT6/6.0,0,-0.816497, -0.333333, -0.471405,
+
+        0.0,0.0,SQRT3/3.0,-0, -1, -0,
+        0.5,0.0,-SQRT3/6.0,-0, -1, -0,
+        -0.5,0.0,-SQRT3/6.0,-0, -1, -0,
+        
+        /*
+        -0.5,0.0,-SQRT3/6.0,
+        0.5,0.0,-SQRT3/6.0,
+        0.0,0.0,SQRT3/3.0,
+        0.0,2*SQRT6/6.0,0,
+         */
     };
 }
 
-class Tetrahedron : public Model {
+class Tetrahedron : public Figure {
 public:
     Tetrahedron();
     Tetrahedron(glm::vec3 position);
@@ -46,13 +60,7 @@ Tetrahedron::Tetrahedron(glm::vec3 position) {
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(TETRAHEDRON::verticesNormal), TETRAHEDRON::verticesNormal, GL_STATIC_DRAW);
-
-    unsigned int EBO;
-    glGenBuffers(1, &EBO);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(TETRAHEDRON::indices), TETRAHEDRON::indices, GL_STATIC_DRAW);
-
+    
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
@@ -69,7 +77,7 @@ void Tetrahedron::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {
     shader.setMat4("view", viewTransform);
     shader.setMat4("projection", projectionTransform);
 
-    glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
+    glDrawArrays(GL_TRIANGLES, 0, 12);
 }
 
 #endif //TAREA2_TETRAHEDRON_H
