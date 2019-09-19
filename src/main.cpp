@@ -8,7 +8,7 @@
 #include <iostream>
 
 #include "Shader.h"
-#include "Camera.h"
+#include "CenteredCamera.h"
 #include "Model.h"
 
 #include "Models/Lamp.h"
@@ -34,11 +34,11 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
-Camera camera(glm::vec3(0.0f, 0.0f, 7.0f));
+CenteredCamera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
 //lighting
-glm::vec3 lightPos1(0.0f, 0.0f, 0.0f);
-glm::vec3 lightPos2(0.0f, 0.0f, 0.0f);
+glm::vec3 lightPos1(0.0f, 0.0f, -2.0f);
+glm::vec3 lightPos2(0.0f, -2.0f, 0.0f);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
@@ -46,7 +46,7 @@ float lastFrame = 0.0f; // Time of last frame
 int main() {
     global_config();
 
-    Sphere fig = Sphere(glm::vec3(0.0f,0.0f,0.0f));
+    Tetrahedron fig = Tetrahedron(glm::vec3(0.0f,0.0f,0.0f));
     //fig.rotate(0.4, glm::vec3(0.0,-1.0f,-0.5f));
     Shader phongShader = Shader("../src/shaders/phong.vert", "../src/shaders/phong.frag");
     //fig.setShader(Shader("../src/shaders/vertex.vert","../src/shaders/fragment.frag"));
@@ -70,12 +70,12 @@ int main() {
         //glClearColor(0.0f, 0.4f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        lightPos1.x = cos(glfwGetTime()) * 3.0f;
-        lightPos1.y = sin(glfwGetTime()) * 3.0f;
+        //lightPos1.x = cos(glfwGetTime()) * 3.0f;
+        //lightPos1.y = sin(glfwGetTime()) * 3.0f;
         lamp1.setPos(lightPos1);
 
-        lightPos2.x = cos(glfwGetTime()) * 3.0f;
-        lightPos2.z = sin(glfwGetTime()) * 3.0f;
+        //lightPos2.x = cos(glfwGetTime()) * 3.0f;
+        //lightPos2.z = sin(glfwGetTime()) * 3.0f;
         lamp2.setPos(lightPos2);
 
         glm::mat4 projection    = glm::mat4(1.0f);
@@ -98,7 +98,7 @@ int main() {
         phongShader.setVec3("lights[1].ambient", 0.2f, 0.2f, 0.2f);
         phongShader.setVec3("lights[1].diffuse", 0.5f, 0.5f, 0.5f);
         phongShader.setVec3("lights[1].specular", 1.0f, 1.0f, 1.0f);
-        phongShader.setVec3("viewPos", camera.Position);
+        phongShader.setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
 
         fig.draw(view, projection);
         fig.unbind();

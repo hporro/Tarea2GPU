@@ -16,47 +16,29 @@
 
 namespace SPHERE {
     float StartingVertices[] = {
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+            -0.5,0.0,-SQRT3/6.0,
+            0.5,0.0,-SQRT3/6.0,
+            0.0,2*SQRT6/6.0,0,
 
-            0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-            0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+            0.5,0.0,-SQRT3/6.0,
+            0.0,0.0,SQRT3/3.0,
+            0.0,2*SQRT6/6.0,0,
 
-            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+            0.0,0.0,SQRT3/3.0,
+            -0.5,0.0,-SQRT3/6.0,
+            0.0,2*SQRT6/6.0,0,
 
-            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-            0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-            0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+            0.0,-2*SQRT6/6.0,0,
+            0.5,0.0,-SQRT3/6.0,
+            -0.5,0.0,-SQRT3/6.0,
 
-            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-            0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-            -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-            0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+            0.0,-2*SQRT6/6.0,0,
+            0.0,0.0,SQRT3/3.0,
+            0.5,0.0,-SQRT3/6.0,
 
-            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-            0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-            -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+            -0.5,0.0,-SQRT3/6.0,
+            0.0,0.0,SQRT3/3.0,
+            0.0,-2*SQRT6/6.0,0,
     };
 
     glm::vec3 calcNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
@@ -65,8 +47,7 @@ namespace SPHERE {
 
     struct Triangle {
         glm::vec3 a,b,c;
-        glm::vec3 n;
-        Triangle(glm::vec3 a,glm::vec3 b,glm::vec3 c,glm::vec3 n) : a(a),b(b),c(c),n(n){}
+        Triangle(glm::vec3 a,glm::vec3 b,glm::vec3 c) : a(a),b(b),c(c){}
         Triangle(){}
     };
 
@@ -84,11 +65,10 @@ namespace SPHERE {
         glm::vec3 ab = (a+b)/(float)2.0;
         glm::vec3 bc = (b+c)/(float)2.0;
 
-        Triangle t1,t2,t3,t4;
-        t1.a = a; t1.b = ab; t1.c = ac; t1.n = calcNormal(t1.a,t1.b,t1.c);
-        t2.a = ab; t2.b = b; t2.c = bc; t2.n = calcNormal(t2.a,t2.b,t2.c);
-        t3.a = ac; t3.b = bc; t3.c = c; t3.n = calcNormal(t3.a,t3.b,t3.c);
-        t4.a = ac; t4.b = ab; t4.c = bc; t4.n = calcNormal(t4.a,t4.b,t4.c);
+        Triangle t1(a,ab,ac),
+                 t2(ab,b,bc),
+                 t3(ac,bc,c),
+                 t4(ac,ab,bc);
 
         return std::vector<Triangle>({t1,t2,t3,t4});
     }
@@ -100,20 +80,17 @@ namespace SPHERE {
         nt.b = center + (center-t.b)*rad/glm::distance(center,t.b);
         nt.c = center + (center-t.c)*rad/glm::distance(center,t.c);
 
-        nt.n = calcNormal(nt.a,nt.b,nt.c);
-
         return nt;
     }
 
-    std::vector<float> genVertices(int subdivitions, float rad, glm::vec3 center){
+    std::vector<float> genVertices(int subdivitions, glm::vec3 center, float rad){
         std::vector<Triangle> finTriangles = std::vector<Triangle>();
-        for(int i=0;i<12;i++){
-            glm::vec3 a = glm::vec3(StartingVertices[i*18+0],StartingVertices[i*18+1],StartingVertices[i*18+2]);
-            glm::vec3 b = glm::vec3(StartingVertices[i*18+6],StartingVertices[i*18+7],StartingVertices[i*18+8]);
-            glm::vec3 c = glm::vec3(StartingVertices[i*18+12],StartingVertices[i*18+13],StartingVertices[i*18+14]);
-            glm::vec3 n = glm::vec3(StartingVertices[i*18+3],StartingVertices[i*18+4],StartingVertices[i*18+5]);
+        for(int i=0;i<6;i++){
+            glm::vec3 a = glm::vec3(StartingVertices[i*9+0],StartingVertices[i*9+1],StartingVertices[i*9+2]);
+            glm::vec3 b = glm::vec3(StartingVertices[i*9+3],StartingVertices[i*9+4],StartingVertices[i*9+5]);
+            glm::vec3 c = glm::vec3(StartingVertices[i*9+6],StartingVertices[i*9+7],StartingVertices[i*9+8]);
 
-            Triangle t0(a,b,c,n);
+            Triangle t0(a,b,c);
             std::vector<Triangle> triangles = std::vector<Triangle>({t0});
 
             for(int count=0;count<subdivitions;count++){
@@ -132,27 +109,28 @@ namespace SPHERE {
         for(Triangle t0: finTriangles){
 
             Triangle t = normTriangle(t0,center,rad);
+            glm::vec3 n = calcNormal(t.a,t.b,t.c);
 
             res.push_back(t.a.x);
             res.push_back(t.a.y);
             res.push_back(t.a.z);
-            res.push_back(t.n.x);
-            res.push_back(t.n.y);
-            res.push_back(t.n.z);
+            res.push_back(n.x);
+            res.push_back(n.y);
+            res.push_back(n.z);
 
             res.push_back(t.b.x);
             res.push_back(t.b.y);
             res.push_back(t.b.z);
-            res.push_back(t.n.x);
-            res.push_back(t.n.y);
-            res.push_back(t.n.z);
+            res.push_back(n.x);
+            res.push_back(n.y);
+            res.push_back(n.z);
 
             res.push_back(t.c.x);
             res.push_back(t.c.y);
             res.push_back(t.c.z);
-            res.push_back(t.n.x);
-            res.push_back(t.n.y);
-            res.push_back(t.n.z);
+            res.push_back(n.x);
+            res.push_back(n.y);
+            res.push_back(n.z);
         }
 
         return res;
@@ -171,7 +149,7 @@ private:
 
 Sphere::Sphere(glm::vec3 position) {
 
-    vertices = SPHERE::genVertices(5,1.0,glm::vec3(0.0,0.0,0.0));
+    vertices = SPHERE::genVertices(5,glm::vec3(0.0,0.0,0.0),1.0);
 
     modelTransform = glm::mat4(1.0f);
     modelTransform = glm::translate(modelTransform, position);
