@@ -131,6 +131,10 @@ void processInput(){
         camera.ProcessKeyboard(LEFT, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, cameraSpeed);
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
+        camera.ProcessKeyboard(ROLL_OUT, cameraSpeed);
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        camera.ProcessKeyboard(ROLL_IN, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
         float prevAngle = atan2(lightPos1.y,lightPos1.x);
         float rad = glm::length(glm::vec2(lightPos1.x,lightPos1.y));
@@ -154,6 +158,12 @@ void processInput(){
         float rad = glm::length(glm::vec2(lightPos2.x,lightPos2.z));
         lightPos2.x = rad*cos(prevAngle+lightSpeed);
         lightPos2.z = rad*sin(prevAngle+lightSpeed);
+    }
+    if(glfwGetKey(window, GLFW_KEY_RIGHT_BRACKET) == GLFW_PRESS){  // pluss in latinamerican spanish keyboard
+        camera.ProcessMouseScroll(0.05);
+    }
+    if(glfwGetKey(window, GLFW_KEY_SLASH) == GLFW_PRESS){ // minnus in latinamerican spanish keyboard
+        camera.ProcessMouseScroll(-0.05);
     }
 }
 

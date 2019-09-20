@@ -7,6 +7,7 @@
 
 #include <glad/glad.h>
 #include <glm/glm.hpp>
+#include <glm/gtx/euler_angles.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <vector>
@@ -15,7 +16,9 @@ enum Camera_Movement {
     FORWARD,
     BACKWARD,
     LEFT,
-    RIGHT
+    RIGHT,
+    ROLL_IN,
+    ROLL_OUT,
 };
 
 // Default camera values
@@ -31,6 +34,9 @@ public:
     float Rad;
     float Theta;
     float Phi;
+    float Yaw;
+    float Pitch;
+    float Roll;
     glm::vec3 Center;
     glm::vec3 Front;
     glm::vec3 Up;
@@ -43,6 +49,9 @@ public:
 
     CenteredCamera(glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f), float radius = 10.0f, float theta = -PI, float phi = -PI, glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f)) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
     {
+        Roll = 0;
+        Yaw = 0;
+        Pitch = 0;
         Rad = radius;
         Theta = theta;
         Phi = phi;
@@ -59,7 +68,7 @@ public:
     glm::mat4 GetViewMatrix()
     {
         glm::vec3 Position = getCameraPosition();
-        return glm::lookAt(Position, Position + Front, Up);
+        return glm::lookAt(Position, Position + Front, Up)*glm::eulerAngleX(Roll);
     }
 
     void ProcessKeyboard(Camera_Movement direction, float deltaTime)
@@ -73,6 +82,10 @@ public:
             Theta -= velocity;
         if (direction == RIGHT)
             Theta += velocity;
+        if (direction == ROLL_IN)
+            Roll += velocity;
+        if (direction == ROLL_OUT)
+            Roll -= velocity;
         updateCameraVectors();
     }
 
@@ -100,6 +113,7 @@ private:
 
         // Also re-calculate the Right and Up vector
         Right = glm::normalize(glm::vec3(cos(Theta)*cos(Phi),cos(Theta)*sin(Phi),-sin(Theta)));  // Normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+
         Up    = glm::normalize(glm::cross(Right, Front));
     }
 };
