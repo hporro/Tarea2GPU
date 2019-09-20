@@ -9,10 +9,10 @@ include_directories(libs/glad/include)
 include_directories(libs/glm)
 
 set(MODELS src/Models/Cube.h src/Models/Lamp.h src/Models/Bunny.h src/Models/Tetrahedron.h src/Models/Piramid.h src/Models/Sphere.h)
-set(SOURCES src/main.cpp src/Shader.h src/stb_image.h src/FPSCamera.h src/Texture.h ${MODELS} src/CenteredCamera.h)
-set(LIBS libs/glad/src/glad.c)
+set(SOURCES src/Shader.h src/FPSCamera.h src/Texture.h ${MODELS} src/CenteredCamera.h)
+set(LIBS libs/glad/src/glad.c src/tiny_obj_loader.cc src/stb_image.h)
 
-add_executable(Tarea2 ${LIBS} ${SOURCES})
+add_executable(Tarea2 src/main.cpp ${LIBS} ${SOURCES})
 target_link_libraries(Tarea2 glfw ${GLFW_LIBRARIES})
 
-add_executable(PLAYGROUND libs/glad/src/glad.c src/playground.cpp src/Shader.h src/stb_image.h)
+add_executable(PLAYGROUND src/playground.cpp ${LIBS} ${SOURCES})

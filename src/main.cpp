@@ -37,8 +37,8 @@ bool firstMouse = true;
 CenteredCamera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
 //lighting
-glm::vec3 lightPos1(0.00001f, -2.0f, 0.0f);
-glm::vec3 lightPos2(0.00001f, 0.0f, -2.0f);
+glm::vec3 lightPos1(0.00001f, -4.0f, 0.0f);
+glm::vec3 lightPos2(0.00001f, 0.0f, -4.0f);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
@@ -46,7 +46,7 @@ float lastFrame = 0.0f; // Time of last frame
 int main() {
     global_config();
 
-    Sphere fig = Sphere(glm::vec3(0.0f,0.0f,0.0f));
+    Bunny fig = Bunny();
     //fig.rotate(0.4, glm::vec3(0.0,-1.0f,-0.5f));
     Shader phongShader = Shader("../src/shaders/phong.vert", "../src/shaders/phong.frag");
     //fig.setShader(Shader("../src/shaders/vertex.vert","../src/shaders/fragment.frag"));

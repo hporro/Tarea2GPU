@@ -4,39 +4,42 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#define PI 3.1415
+#include <vector>
+#include <string>
 
-glm::vec3 calcNormal(glm::vec3 a, glm::vec3 b, glm::vec3 c){
-    return -glm::normalize(glm::cross((b-a),(c-a)));
-}
+#include "tiny_obj_loader.h"
 
 int main(){
-#define SQRT3 1.7320508076
-#define SIN60 0.8660254038
-#define SIN30 0.5
-#define SQRT2 1.4142135624
-#define SQRT6 2.4494897428
+    std::string inputfile = "../resources/bunny.obj";
+    tinyobj::attrib_t attrib;
+    std::vector<tinyobj::shape_t> shapes;
+    std::vector<tinyobj::material_t> materials;
 
-    glm::vec3 verticesNormal[] = {
-            glm::vec3(-0.5,0.0,-SQRT3/6.0),
-            glm::vec3(0.5,0.0,-SQRT3/6.0),
-            glm::vec3(0.0,0.0,SQRT3/3.0),
-            glm::vec3(0.0,2*SQRT6/6.0,0),
-            glm::vec3(0.0,-2*SQRT6/6.0,0),
-    };
+    std::string warn;
+    std::string err;
 
-    unsigned int indices[] = {
-            0,1,3,
-            1,2,3,
-            2,1,3,
-            4,1,0,
-            4,2,1,
-            4,2,0,
-    };
 
-    for(int i=0;i<6;i++){
-        glm::vec3 vec = calcNormal(verticesNormal[indices[i*3+0]],verticesNormal[indices[i*3+1]],verticesNormal[indices[i*3+2]]);
-        std::cout << "t" << i << ": " << vec.x << ", " << vec.y << ", " << vec.z << "," << std::endl;
+    bool ret = tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, inputfile.c_str());
+
+    if (!warn.empty()) {
+        std::cout << warn << std::endl;
     }
-    
+
+    if (!err.empty()) {
+        std::cerr << err << std::endl;
+    }
+
+    if (!ret) {
+        exit(1);
+    }
+
+    std::cout << shapes[0].mesh.num_face_vertices.size() << std::endl;
+    for(int i=0;i<shapes[0].mesh.num_face_vertices.size();i++){
+        if(shapes[0].mesh.num_face_vertices[i]>3)std::cout << "AAAAAAAAAAAAA" << std::endl;
+    }
+
+    /*for(int i=0;i<attrib.vertices.size()/3;i++){
+        std::cout << "v: " << attrib.vertices[i*3+0] << " " << attrib.vertices[i*3+1] << " " << attrib.vertices[i*3+2] << std::endl;
+        std::cout << "vn: " << attrib.normals[i*3+0] << " " << attrib.normals[i*3+1] << " " << attrib.normals[i*3+2] << std::endl;
+    }*/
 }

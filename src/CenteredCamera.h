@@ -45,7 +45,7 @@ public:
     float MovementSpeed;
     float MouseSensitivity;
 
-    CenteredCamera(glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f), float radius = 7.0f, float theta = -PI, float phi = -PI) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY)
+    CenteredCamera(glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f), float radius = 10.0f, float theta = -PI, float phi = -PI) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY)
     {
         Roll = 0;
         Rad = radius;

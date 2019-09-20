@@ -19,7 +19,7 @@ del departamento de computación de la Universidad de Chile, "Programa visualiza
 * [GLAD](https://github.com/Dav1dde/glad) - Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
 * [glm](https://glm.g-truc.net/) - Librería en c++ para el manejo de matrices y vectores.
 * [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) - Librería abierta en c++ para el manejo de archivos de imágenes.
-* [Assimp](http://assimp.org/) - Open Asset Import Library (short name: Assimp) is a portable Open Source library to import various well-known 3D model formats in a uniform manner.
+* [tinyobjloader](https://github.com/syoyo/tinyobjloader) - Tiny but powerful single file wavefront obj loader.
 
 ## Versionamiento
 
