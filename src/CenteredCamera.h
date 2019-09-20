@@ -24,39 +24,34 @@ enum Camera_Movement {
 // Default camera values
 const float SPEED       =  2.5f;
 const float SENSITIVITY =  0.1f;
-const float ZOOM        =  45.0f;
 
 #define PI 3.1415
 
+
+//I used a mix of euler angles and spherical coordinates to move the camera position and normal angles
+//I know that using spherical coordinates it's quite expensive. If I had more time I would improve it.
 class CenteredCamera {
 public:
     // Camera attributes
     float Rad;
     float Theta;
     float Phi;
-    float Yaw;
-    float Pitch;
     float Roll;
     glm::vec3 Center;
     glm::vec3 Front;
     glm::vec3 Up;
     glm::vec3 Right;
-    glm::vec3 WorldUp;
     // Camera options
     float MovementSpeed;
     float MouseSensitivity;
-    float Zoom;
 
-    CenteredCamera(glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f), float radius = 10.0f, float theta = -PI, float phi = -PI, glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f)) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
+    CenteredCamera(glm::vec3 center = glm::vec3(0.0f, 0.0f, 0.0f), float radius = 7.0f, float theta = -PI, float phi = -PI) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY)
     {
         Roll = 0;
-        Yaw = 0;
-        Pitch = 0;
         Rad = radius;
         Theta = theta;
         Phi = phi;
         Center = center;
-        WorldUp = up;
 
         updateCameraVectors();
     }
@@ -97,6 +92,7 @@ public:
     void ProcessMouseScroll(float yoffset)
     {
         Rad += yoffset * MovementSpeed;
+        if(Rad < 1.0) Rad = 1.0;
         updateCameraVectors();
     }
 

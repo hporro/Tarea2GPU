@@ -46,7 +46,7 @@ float lastFrame = 0.0f; // Time of last frame
 int main() {
     global_config();
 
-    Tetrahedron fig = Tetrahedron(glm::vec3(0.0f,0.0f,0.0f));
+    Sphere fig = Sphere(glm::vec3(0.0f,0.0f,0.0f));
     //fig.rotate(0.4, glm::vec3(0.0,-1.0f,-0.5f));
     Shader phongShader = Shader("../src/shaders/phong.vert", "../src/shaders/phong.frag");
     //fig.setShader(Shader("../src/shaders/vertex.vert","../src/shaders/fragment.frag"));
@@ -124,17 +124,17 @@ void processInput(){
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        camera.ProcessKeyboard(FORWARD, cameraSpeed);
+        camera.ProcessKeyboard(ROLL_OUT, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        camera.ProcessKeyboard(BACKWARD, cameraSpeed);
+        camera.ProcessKeyboard(ROLL_IN, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
         camera.ProcessKeyboard(LEFT, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS)
-        camera.ProcessKeyboard(ROLL_OUT, cameraSpeed);
+        camera.ProcessKeyboard(FORWARD, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
-        camera.ProcessKeyboard(ROLL_IN, cameraSpeed);
+        camera.ProcessKeyboard(BACKWARD, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
         float prevAngle = atan2(lightPos1.y,lightPos1.x);
         float rad = glm::length(glm::vec2(lightPos1.x,lightPos1.y));

@@ -14,6 +14,12 @@
 #include "../Figure.h"
 #include "../Model.h"
 
+/*
+ * This idea of a sphere model from simpler ones comes from
+ * https://stackoverflow.com/questions/7687148/drawing-sphere-in-opengl-without-using-glusphere
+ * Credits to the corresponding author.
+ * */
+
 namespace SPHERE {
     float StartingVertices[] = {
             -0.5,0.0,-SQRT3/6.0,
