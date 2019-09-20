@@ -37,8 +37,8 @@ bool firstMouse = true;
 CenteredCamera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
 //lighting
-glm::vec3 lightPos1(0.0f, 0.0f, -2.0f);
-glm::vec3 lightPos2(0.0f, -2.0f, 0.0f);
+glm::vec3 lightPos1(0.00001f, -2.0f, 0.0f);
+glm::vec3 lightPos2(0.00001f, 0.0f, -2.0f);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
@@ -70,8 +70,6 @@ int main() {
         //glClearColor(0.0f, 0.4f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        //lightPos1.x = cos(glfwGetTime()) * 3.0f;
-        //lightPos1.y = sin(glfwGetTime()) * 3.0f;
         lamp1.setPos(lightPos1);
 
         //lightPos2.x = cos(glfwGetTime()) * 3.0f;
@@ -122,6 +120,7 @@ int main() {
 
 void processInput(){
     float cameraSpeed = 1.0f * deltaTime;
+    float lightSpeed = 1.0f * deltaTime;
     if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
@@ -132,6 +131,30 @@ void processInput(){
         camera.ProcessKeyboard(LEFT, cameraSpeed);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, cameraSpeed);
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
+        float prevAngle = atan2(lightPos1.y,lightPos1.x);
+        float rad = glm::length(glm::vec2(lightPos1.x,lightPos1.y));
+        lightPos1.x = rad*cos(prevAngle-lightSpeed);
+        lightPos1.y = rad*sin(prevAngle-lightSpeed);
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
+        float prevAngle = atan2(lightPos1.y,lightPos1.x);
+        float rad = glm::length(glm::vec2(lightPos1.x,lightPos1.y));
+        lightPos1.x = rad*cos(prevAngle+lightSpeed);
+        lightPos1.y = rad*sin(prevAngle+lightSpeed);
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+        float prevAngle = atan2(lightPos2.z,lightPos2.x);
+        float rad = glm::length(glm::vec2(lightPos2.x,lightPos2.z));
+        lightPos2.x = rad*cos(prevAngle-lightSpeed);
+        lightPos2.z = rad*sin(prevAngle-lightSpeed);
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+        float prevAngle = atan2(lightPos2.z,lightPos2.x);
+        float rad = glm::length(glm::vec2(lightPos2.x,lightPos2.z));
+        lightPos2.x = rad*cos(prevAngle+lightSpeed);
+        lightPos2.z = rad*sin(prevAngle+lightSpeed);
+    }
 }
 
 void framebuffer_size_callback(GLFWwindow* glfWwindow, int width, int height){
