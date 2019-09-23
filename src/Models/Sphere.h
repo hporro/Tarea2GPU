@@ -11,7 +11,6 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../Figure.h"
 #include "../Model.h"
 
 /*
@@ -144,7 +143,6 @@ namespace SPHERE {
 
 class Sphere : public Model {
 public:
-    Sphere();
     Sphere(glm::vec3 position);
     void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
 
@@ -178,10 +176,6 @@ Sphere::Sphere(glm::vec3 position) {
     for(int i=0;i<vertices.size()/6;i++){
         std::cout << vertices[i*6+0] << " " << vertices[i*6+1] << " " << vertices[i*6+2] << " " << vertices[i*6+3] << " " << vertices[i*6+4] << " " << vertices[i*6+5] << std::endl;
     }*/
-}
-
-Sphere::Sphere(){
-    Sphere(glm::vec3(0.0f,0.0f,0.0f));
 }
 
 void Sphere::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {

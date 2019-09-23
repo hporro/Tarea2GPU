@@ -9,7 +9,6 @@
 #define LEARNOPENGL_LAMP_H
 
 #include "../Model.h"
-#include "../Figure.h"
 
 namespace LAMP{
     float vertices[] = {
@@ -57,7 +56,7 @@ namespace LAMP{
     };
 }
 
-class Lamp : public Figure {
+class Lamp : public Model {
 public:
     Lamp(glm::vec3 position);
     void setPos(glm::vec3 position);

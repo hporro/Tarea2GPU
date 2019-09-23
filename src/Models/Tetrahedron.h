@@ -11,7 +11,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../Figure.h"
+#include "../Model.h"
 
 namespace TETRAHEDRON {
 #define SQRT3 1.7320508076
@@ -42,7 +42,7 @@ namespace TETRAHEDRON {
     };
 }
 
-class Tetrahedron : public Figure {
+class Tetrahedron : public Model {
 public:
     Tetrahedron();
     Tetrahedron(glm::vec3 position);

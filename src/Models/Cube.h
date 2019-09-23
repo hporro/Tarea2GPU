@@ -7,10 +7,7 @@
 
 #include <GLFW/glfw3.h>
 
-#include "../Shader.h"
-#include "../Texture.h"
 #include "../Model.h"
-#include "../Figure.h"
 
 namespace CUBE{
     float verticesNormal[] = {
@@ -101,7 +98,7 @@ namespace CUBE{
     };
 }
 
-class Cube : public Figure {
+class Cube : public Model {
 public:
     Cube();
     Cube(glm::vec3 position);

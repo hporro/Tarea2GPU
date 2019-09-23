@@ -5,25 +5,23 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../Texture.h"
-#include "../Shader.h"
+#include "../Core/Texture.h"
+#include "../Core/Shader.h"
 
-#include "../tiny_obj_loader.h"
+#include "../Model.h"
+
+#include "../../libs/tiny_obj_loader.h"
 
 class Bunny : public Model {
 public:
-    Bunny();
     Bunny(glm::vec3 position);
-
-
     void draw(glm::mat4 projectionTransform, glm::mat4 viewTransform);
-protected:
 private:
-    void loadBunnyModel();
-    std::vector<float> vertexNormal = std::vector<float>();;
+    std::vector<float> loadBunnyModel();
+    std::vector<float> vertices;
 };
 
-void Bunny::loadBunnyModel() {
+std::vector<float> Bunny::loadBunnyModel() {
     std::string inputfile = "../resources/bunny.obj";
     tinyobj::attrib_t attrib;
     std::vector<tinyobj::shape_t> shapes;
@@ -46,8 +44,9 @@ void Bunny::loadBunnyModel() {
         exit(1);
     }
 
-    for(int i=0;i<shapes[0].mesh.num_face_vertices.size();i++){
-        for(int v=0;v<shapes[0].mesh.num_face_vertices[i];v++){
+    std::vector<float> vertexNormal = std::vector<float>();
+    for(int i=0;i<(int)shapes[0].mesh.num_face_vertices.size();i++){
+        for(int v=0;v<(int)shapes[0].mesh.num_face_vertices[i];v++){
             tinyobj::index_t idx = shapes[0].mesh.indices[v];
             vertexNormal.push_back(attrib.vertices[3*idx.vertex_index+0]);
             vertexNormal.push_back(attrib.vertices[3*idx.vertex_index+1]);
@@ -58,7 +57,8 @@ void Bunny::loadBunnyModel() {
             vertexNormal.push_back(attrib.normals[3*idx.normal_index+2]);
         }
     }
-    std::cout << vertexNormal[0] << " " << vertexNormal[1] << " " << vertexNormal[2] << " " << vertexNormal[3] << " " << vertexNormal[4] << " " << vertexNormal[5] << std::endl;
+    std::cout << vertexNormal.size()/6 << std::endl;
+    return vertexNormal;
 }
 
 void Bunny::draw(glm::mat4 projectionTransform, glm::mat4 viewTransform){
@@ -66,11 +66,11 @@ void Bunny::draw(glm::mat4 projectionTransform, glm::mat4 viewTransform){
     shader.setMat4("view", viewTransform);
     shader.setMat4("projection", projectionTransform);
 
-    glDrawArrays(GL_TRIANGLES, 0, vertexNormal.size()/6);
+    glDrawArrays(GL_TRIANGLES, 0, vertices.size()/6);
 }
 
 Bunny::Bunny(glm::vec3 position){
-    loadBunnyModel();
+    vertices = loadBunnyModel();
 
     modelTransform = glm::mat4(1.0f);
     modelTransform = glm::translate(modelTransform, position);
@@ -81,17 +81,13 @@ Bunny::Bunny(glm::vec3 position){
     glGenBuffers(1, &VBO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertexNormal.size(), &vertexNormal[0], GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertices.size(), &vertices.front(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-}
-
-Bunny::Bunny() {
-    Bunny(glm::vec3(0.0f,0.0f,0.0f));
 }
 
 #endif //TAREA2_BUNNY_H

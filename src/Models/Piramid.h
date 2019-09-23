@@ -12,7 +12,6 @@
 #include <GLFW/glfw3.h>
 
 #include "../Model.h"
-#include "../Figure.h"
 
 namespace PIRAMID {
     #define SQRT2 1.4142135624
@@ -43,7 +42,7 @@ namespace PIRAMID {
     };
 }
 
-class Piramid : public Figure {
+class Piramid : public Model {
 public:
     Piramid();
     Piramid (glm::vec3 position);

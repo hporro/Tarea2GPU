@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-#include "tiny_obj_loader.h"
+#include "../libs/tiny_obj_loader.h"
 
 int main(){
     std::string inputfile = "../resources/bunny.obj";

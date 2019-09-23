@@ -12,8 +12,8 @@
 
 #include <vector>
 
-#include "Shader.h"
-#include "Texture.h"
+#include "Core/Shader.h"
+#include "Core/Texture.h"
 
 
 class Model {
