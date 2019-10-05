@@ -90,15 +90,15 @@ int main() {
 
         phongShader.setVec3("lights[0].color", lightColor1);
         phongShader.setVec3("lights[0].position", lightPos1);
-        phongShader.setVec3("lights[0].ambient", 0.1f, 0.1f, 0.1f);
-        phongShader.setVec3("lights[0].diffuse", 0.25f, 0.25f, 0.25f);
-        phongShader.setVec3("lights[0].specular", 0.5f, 0.5f, 0.5f);
+        phongShader.setVec3("lights[0].ambient", 0.2f, 0.2f, 0.2f);
+        phongShader.setVec3("lights[0].diffuse", 0.5f, 0.5f, 0.5f);
+        phongShader.setVec3("lights[0].specular", 0.9f, 0.9f, 0.9f);
 
         phongShader.setVec3("lights[1].color", lightColor2);
         phongShader.setVec3("lights[1].position", lightPos2);
-        phongShader.setVec3("lights[1].ambient", 0.1f, 0.1f, 0.1f);
-        phongShader.setVec3("lights[1].diffuse", 0.25f, 0.25f, 0.25f);
-        phongShader.setVec3("lights[1].specular", 0.5f, 0.5f, 0.5f);
+        phongShader.setVec3("lights[1].ambient", 0.2f, 0.2f, 0.2f);
+        phongShader.setVec3("lights[1].diffuse", 0.5f, 0.5f, 0.5f);
+        phongShader.setVec3("lights[1].specular", 0.9f, 0.9f, 0.9f);
 
         phongShader.setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
 
