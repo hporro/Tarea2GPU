@@ -182,6 +182,7 @@ namespace SPHERE {
 
 class Sphere : public Model {
 public:
+    Sphere(){};
     Sphere(glm::vec3 position);
     void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
 

@@ -100,7 +100,7 @@ namespace CUBE{
 
 class Cube : public Model {
 public:
-    Cube();
+    Cube(){};
     Cube(glm::vec3 position);
     void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
 };
@@ -133,10 +133,6 @@ Cube::Cube(glm::vec3 position) {
 
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     glEnableVertexAttribArray(2);
-}
-
-Cube::Cube(){
-    Cube(glm::vec3(0.0f,0.0f,0.0f));
 }
 
 #endif //LEARNOPENGL_CUBE_H
