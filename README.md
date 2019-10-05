@@ -20,6 +20,7 @@ del departamento de computación de la Universidad de Chile, "Programa visualiza
 * [glm](https://glm.g-truc.net/) - Librería en c++ para el manejo de matrices y vectores.
 * [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) - Librería abierta en c++ para el manejo de archivos de imágenes.
 * [tinyobjloader](https://github.com/syoyo/tinyobjloader) - Tiny but powerful single file wavefront obj loader.
+* [Bouml](https://bouml.fr/) - Herramienta utilizada para generar diagramas UML.
 
 ## Versionamiento
 
@@ -36,4 +37,4 @@ Este projecto esta bajo la licencia MIT - ver el archivo [LICENSE.md](LICENSE.md
 ## Agradecimientos
 
 * A [Joey de Vries](https://joeydevries.com/#home), por hacer la página [learnOpenGL](https://learnopengl.com/), que me sirvió muchísimo para aprender lo necesario de OpenGL, shaders y algoritmos de lighting para esta tarea.
-* A [João Paulo](https://3dtextures.me/) por las normal mapping textures.
+* A [João Paulo](https://3dtextures.me/) por la textura utilizada para el shadrr normal mapping.

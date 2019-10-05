@@ -38,6 +38,8 @@ CenteredCamera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 //lighting
 glm::vec3 lightPos1(0.00001f, -4.0f, 0.0f);
 glm::vec3 lightPos2(0.00001f, 0.0f, -4.0f);
+glm::vec3 lightColor1(1.0f,1.0f,1.0f);
+glm::vec3 lightColor2(1.0f,1.0f,1.0f);
 
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
@@ -45,12 +47,12 @@ float lastFrame = 0.0f; // Time of last frame
 int main() {
     global_config();
 
-    Cube fig = Cube(glm::vec3(0.0,0.0,0.0));
-    fig.addTexture(Texture("../resources/tex.jpg",0,GL_RGB),"lightMap");
-    //fig.rotate(0.4, glm::vec3(0.0,-1.0f,-0.5f));
-    Shader phongShader = Shader("../src/shaders/normalMapping.vert", "../src/shaders/normalMapping.frag");
-    //fig.setShader(Shader("../src/shaders/vertex.vert","../src/shaders/fragment.frag"));
+    Sphere fig = Sphere(glm::vec3(0.0,0.0,0.0));
+
+    Shader phongShader = Shader("../src/shaders/toon.vert", "../src/shaders/toon.frag");
     fig.setShader(phongShader);
+
+    fig.addTexture(Texture("../resources/tex.jpg",0,GL_RGB),"normalMap");
 
     Lamp lamp1 = Lamp(lightPos1);
     Shader lampShader1 = Shader("../src/shaders/vertex.vert", "../src/shaders/brightShader.frag");
@@ -72,13 +74,10 @@ int main() {
 
         lamp1.setPos(lightPos1);
 
-        //lightPos2.x = cos(glfwGetTime()) * 3.0f;
-        //lightPos2.z = sin(glfwGetTime()) * 3.0f;
         lamp2.setPos(lightPos2);
 
         glm::mat4 projection    = glm::mat4(1.0f);
         projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        //rotate(0.1,glm::vec3(0.0f,0.0f,1.0f));
 
         glm::mat4 view = camera.GetViewMatrix();
 
@@ -88,26 +87,31 @@ int main() {
         phongShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
         phongShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
         phongShader.setFloat("material.shininess", 64.0f);
+
+        phongShader.setVec3("lights[0].color", lightColor1);
         phongShader.setVec3("lights[0].position", lightPos1);
         phongShader.setVec3("lights[0].ambient", 0.1f, 0.1f, 0.1f);
         phongShader.setVec3("lights[0].diffuse", 0.25f, 0.25f, 0.25f);
         phongShader.setVec3("lights[0].specular", 0.5f, 0.5f, 0.5f);
+
+        phongShader.setVec3("lights[1].color", lightColor2);
         phongShader.setVec3("lights[1].position", lightPos2);
         phongShader.setVec3("lights[1].ambient", 0.1f, 0.1f, 0.1f);
         phongShader.setVec3("lights[1].diffuse", 0.25f, 0.25f, 0.25f);
         phongShader.setVec3("lights[1].specular", 0.5f, 0.5f, 0.5f);
+
         phongShader.setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
 
         fig.draw(view, projection);
         fig.unbind();
 
         lamp1.bind();
-        lampShader1.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        lampShader1.setVec3("lightColor", lightColor1);
         lamp1.draw(view, projection);
         lamp1.unbind();
 
         lamp2.bind();
-        lampShader2.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        lampShader2.setVec3("lightColor", lightColor2);
         lamp2.draw(view, projection);
         lamp2.unbind();
 

@@ -18,7 +18,7 @@ struct PointLight {
 uniform Material material;
 uniform PointLight lights[NUMBER_OF_POINT_LIGHTS];
 uniform vec3 viewPos;
-uniform sampler2D lightMap;
+uniform sampler2D normalMap;
 
 in vec3 FragPos;
 in vec3 Normal;
@@ -43,7 +43,7 @@ vec3 pointLightInfluence(PointLight light, vec3 norm){
 }
 
 void main(){
-    vec3 norm = texture(lightMap, TexCoord).xyz;
+    vec3 norm = texture(normalMap, TexCoord).xyz;
 
     vec3 result = vec3(0.0f);
 
