@@ -8,7 +8,7 @@ include_directories(libs/glfw-3.3/include)
 include_directories(libs/glad/include)
 include_directories(libs/glm)
 
-set(MODELS src/Models/Cube.h src/Models/Lamp.h src/Models/Bunny.h src/Models/Tetrahedron.h src/Models/Piramid.h src/Models/Sphere.h)
+set(MODELS src/Models/Cube.h src/Models/Lamp.h src/Models/Bunny.h src/Models/Tetrahedron.h src/Models/Piramid.h src/Models/Sphere.h src/Models/ModelImporter.h)
 set(SOURCES src/Core/Shader.h src/Camera/FPSCamera.h src/Core/Texture.h ${MODELS} src/Camera/CenteredCamera.h)
 set(LIBS libs/glad/src/glad.c libs/tiny_obj_loader.cc libs/stb_image.h)
 

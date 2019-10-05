@@ -170,12 +170,6 @@ Sphere::Sphere(glm::vec3 position) {
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
-
-    /*std::cout << (vertices.size()/6) << std::endl;
-
-    for(int i=0;i<vertices.size()/6;i++){
-        std::cout << vertices[i*6+0] << " " << vertices[i*6+1] << " " << vertices[i*6+2] << " " << vertices[i*6+3] << " " << vertices[i*6+4] << " " << vertices[i*6+5] << std::endl;
-    }*/
 }
 
 void Sphere::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {

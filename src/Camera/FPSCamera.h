@@ -108,6 +108,10 @@ public:
         Position += (Front * yoffset) * MovementSpeed;
     }
 
+    glm::vec3 getCameraPosition(){
+        return Position;
+    }
+
 private:
     // Calculates the front vector from the FPSCamera's (updated) Euler Angles
     void updateCameraVectors()

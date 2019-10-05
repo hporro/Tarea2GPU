@@ -15,8 +15,8 @@
 #include "Models/Cube.h"
 #include "Models/Tetrahedron.h"
 #include "Models/Piramid.h"
-#include "Models/Bunny.h"
 #include "Models/Sphere.h"
+#include "Models/ModelImporter.h"
 
 void global_config();
 void framebuffer_size_callback(GLFWwindow* glfWwindow, int width, int height);
@@ -45,9 +45,10 @@ float lastFrame = 0.0f; // Time of last frame
 int main() {
     global_config();
 
-    Sphere fig = Sphere(glm::vec3(0.0,0.0,0.0));
+    Cube fig = Cube(glm::vec3(0.0,0.0,0.0));
+    fig.addTexture(Texture("../resources/tex.jpg",0,GL_RGB),"lightMap");
     //fig.rotate(0.4, glm::vec3(0.0,-1.0f,-0.5f));
-    Shader phongShader = Shader("../src/shaders/phong.vert", "../src/shaders/phong.frag");
+    Shader phongShader = Shader("../src/shaders/normalMapping.vert", "../src/shaders/normalMapping.frag");
     //fig.setShader(Shader("../src/shaders/vertex.vert","../src/shaders/fragment.frag"));
     fig.setShader(phongShader);
 
@@ -83,18 +84,18 @@ int main() {
 
         fig.bind();
 
-        phongShader.setVec3("material.ambient", 1.0f, 0.5f, 0.31f);
+        phongShader.setVec3("material.ambient", 0.5f, 0.25f, 0.15f);
         phongShader.setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
         phongShader.setVec3("material.specular", 0.5f, 0.5f, 0.5f);
         phongShader.setFloat("material.shininess", 64.0f);
         phongShader.setVec3("lights[0].position", lightPos1);
-        phongShader.setVec3("lights[0].ambient", 0.2f, 0.2f, 0.2f);
-        phongShader.setVec3("lights[0].diffuse", 0.5f, 0.5f, 0.5f);
-        phongShader.setVec3("lights[0].specular", 1.0f, 1.0f, 1.0f);
+        phongShader.setVec3("lights[0].ambient", 0.1f, 0.1f, 0.1f);
+        phongShader.setVec3("lights[0].diffuse", 0.25f, 0.25f, 0.25f);
+        phongShader.setVec3("lights[0].specular", 0.5f, 0.5f, 0.5f);
         phongShader.setVec3("lights[1].position", lightPos2);
-        phongShader.setVec3("lights[1].ambient", 0.2f, 0.2f, 0.2f);
-        phongShader.setVec3("lights[1].diffuse", 0.5f, 0.5f, 0.5f);
-        phongShader.setVec3("lights[1].specular", 1.0f, 1.0f, 1.0f);
+        phongShader.setVec3("lights[1].ambient", 0.1f, 0.1f, 0.1f);
+        phongShader.setVec3("lights[1].diffuse", 0.25f, 0.25f, 0.25f);
+        phongShader.setVec3("lights[1].specular", 0.5f, 0.5f, 0.5f);
         phongShader.setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
 
         fig.draw(view, projection);
