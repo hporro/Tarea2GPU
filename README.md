@@ -57,4 +57,4 @@ Este projecto esta bajo la licencia MIT - ver el archivo [LICENSE.md](LICENSE.md
 ## Agradecimientos
 
 * A [Joey de Vries](https://joeydevries.com/#home), por hacer la página [learnOpenGL](https://learnopengl.com/), que me sirvió muchísimo para aprender lo necesario de OpenGL, shaders y algoritmos de lighting para esta tarea.
-* A [João Paulo](https://3dtextures.me/) por la textura utilizada para el shadrr normal mapping.
+* A [João Paulo](https://3dtextures.me/) por la textura utilizada para el shader normal mapping.
