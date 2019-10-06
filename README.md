@@ -3,11 +3,32 @@
 Opción E de la segunda tarea del curso CC7515-1 - Computación en GPU
 del departamento de computación de la Universidad de Chile, "Programa visualizador de shaders", desarrollada por el alumno Heinich Porro, entre agosto y septiembre del año 2019.
 
-## Getting Started
+## Instalación
+Se utilizaron librerías simples que pueden ser compiladas por cmake, por lo que no hay nada especial que instalar (además de, quizás, el paquete dev-xorg en ubuntu).
+Se usó CLion para el desarrollo de la tarea.
+Es posible compilarla usando cmake, siguiendo la siguiente secuencia de comandos:
 
-### Prerequisites
+Con una consola ubicada en la carpeta principal del proyecto, que llamaremos ${TAREA2} desde ahora, se llama el siguiente comando:
 
-### Installing
+```
+mkdir build
+```
+
+Luego se ubica la consola en la carpeta recién creada, y se hace el build de cmake:
+
+```
+cd build
+cmake ..
+```
+
+Entonces, se usa make para generar el ejecutable de la tarea:
+
+```
+make all
+```
+
+Entonces el ejecutable de la tarea, llamado Tarea2.exe o Tarea2, debe estar en la carpeta o en una carpeta dentro de la carpeta ${Tarea2}/build/Debug.
+
 
 ## Herramientas utilizadas en el desarrollo de la tarea
 
@@ -19,7 +40,6 @@ del departamento de computación de la Universidad de Chile, "Programa visualiza
 * [GLAD](https://github.com/Dav1dde/glad) - Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
 * [glm](https://glm.g-truc.net/) - Librería en c++ para el manejo de matrices y vectores.
 * [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) - Librería abierta en c++ para el manejo de archivos de imágenes.
-* [tinyobjloader](https://github.com/syoyo/tinyobjloader) - Tiny but powerful single file wavefront obj loader.
 * [Bouml](https://bouml.fr/) - Herramienta utilizada para generar diagramas UML.
 
 ## Versionamiento
