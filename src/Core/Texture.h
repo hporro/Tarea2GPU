@@ -2,8 +2,8 @@
 // Created by heini on 13-09-2019.
 //
 
-#ifndef LEARNOPENGL_TEXTURE_H
-#define LEARNOPENGL_TEXTURE_H
+#ifndef TAREA2_TEXTURE_H
+#define TAREA2_TEXTURE_H
 
 #include "../../libs/stb_image.h"
 
@@ -42,4 +42,4 @@ void Texture::bind(int gl_textureNumber) {
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
-#endif //LEARNOPENGL_TEXTURE_H
+#endif //TAREA2_TEXTURE_H

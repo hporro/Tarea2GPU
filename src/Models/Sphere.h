@@ -1,7 +1,3 @@
-//
-// Created by heini on 19-09-2019.
-//
-
 #ifndef TAREA2_SPHERE_H
 #define TAREA2_SPHERE_H
 
@@ -14,7 +10,7 @@
 #include "../Model.h"
 
 /*
- * This idea of a sphere model derived from simpler ones comes from https://stackoverflow.com/a/7687312
+ * This idea of a sphere model derived from a cubical one comes from https://stackoverflow.com/a/7687312
  * Credits to the corresponding author.
  * */
 

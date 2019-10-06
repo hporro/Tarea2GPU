@@ -1,5 +1,5 @@
-#ifndef LEARNOPENGL_CUBE_H
-#define LEARNOPENGL_CUBE_H
+#ifndef TAREA2_CUBE_H
+#define TAREA2_CUBE_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -102,7 +102,7 @@ class Cube : public Model {
 public:
     Cube(){};
     Cube(glm::vec3 position);
-    void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
+    virtual void draw(glm::mat4 viewTransform, glm::mat4 projectionTransform);
 };
 
 void Cube::draw(glm::mat4 viewTransform, glm::mat4 projectionTransform) {
@@ -135,4 +135,4 @@ Cube::Cube(glm::vec3 position) {
     glEnableVertexAttribArray(2);
 }
 
-#endif //LEARNOPENGL_CUBE_H
+#endif //TAREA2_CUBE_H

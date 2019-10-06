@@ -1,7 +1,3 @@
-//
-// Created by heini on 19-09-2019.
-//
-
 #ifndef TAREA2_CENTEREDCAMERA_H
 #define TAREA2_CENTEREDCAMERA_H
 

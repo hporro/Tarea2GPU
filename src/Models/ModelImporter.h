@@ -1,6 +1,10 @@
 #ifndef TAREA2_MODEL_IMPORTER_H
 #define TAREA2_MODEL_IMPORTER_H
 
+#ifndef TINYOBJLOADER_IMPLEMENTATION
+#define TINYOBJLOADER_IMPLEMENTATION
+#endif
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -19,6 +23,7 @@ class ModelImporter : public Model {
 
 public:
     ModelImporter(glm::vec3 position, std::string &inputFile);
+    ModelImporter(){}
     void draw(glm::mat4 projectionTransform, glm::mat4 viewTransform);
 private:
     std::vector<float> loadModel(std::string &inputFile);
@@ -48,23 +53,37 @@ std::vector<float> ModelImporter::loadModel(std::string &inputFile) {
     }
 
     std::vector<float> vertexNormal = std::vector<float>();
-    for(int s=0;s<(int)shapes.size();s++) {
+    // Loop over shapes
+    for (size_t s = 0; s < shapes.size(); s++) {
+        // Loop over faces(polygon)
         size_t index_offset = 0;
-        for (int i = 0; i < (int) shapes[s].mesh.num_face_vertices.size(); i++) {
-            int fv = shapes[s].mesh.num_face_vertices[i];
-            for (int v = 0; v < (int) fv; v++) {
+        for (size_t f = 0; f < shapes[s].mesh.num_face_vertices.size(); f++) {
+            int fv = shapes[s].mesh.num_face_vertices[f];
+
+            // Loop over vertices in the face.
+            for (size_t v = 0; v < fv; v++) {
+                // access to vertex
                 tinyobj::index_t idx = shapes[s].mesh.indices[index_offset + v];
 
-                vertexNormal.push_back((float) attrib.vertices[3 * idx.vertex_index + 0]);
-                vertexNormal.push_back((float) attrib.vertices[3 * idx.vertex_index + 1]);
-                vertexNormal.push_back((float) attrib.vertices[3 * idx.vertex_index + 2]);
+                tinyobj::real_t vx = attrib.vertices[3*idx.vertex_index+0];
+                tinyobj::real_t vy = attrib.vertices[3*idx.vertex_index+1];
+                tinyobj::real_t vz = attrib.vertices[3*idx.vertex_index+2];
+                tinyobj::real_t nx = attrib.normals[3*idx.normal_index+0];
+                tinyobj::real_t ny = attrib.normals[3*idx.normal_index+1];
+                tinyobj::real_t nz = attrib.normals[3*idx.normal_index+2];
+                tinyobj::real_t tx = attrib.texcoords[2*idx.texcoord_index+0];
+                tinyobj::real_t ty = attrib.texcoords[2*idx.texcoord_index+1];
 
-                vertexNormal.push_back((float) attrib.normals[3 * idx.normal_index + 0]);
-                vertexNormal.push_back((float) attrib.normals[3 * idx.normal_index + 1]);
-                vertexNormal.push_back((float) attrib.normals[3 * idx.normal_index + 2]);
+                vertexNormal.push_back((float) vx);
+                vertexNormal.push_back((float) vy);
+                vertexNormal.push_back((float) vz);
 
-                //vertexNormal.push_back((float) attrib.texcoords[2 * idx.texcoord_index + 0]);
-                //vertexNormal.push_back((float) attrib.texcoords[2 * idx.texcoord_index + 1]);
+                vertexNormal.push_back((float) nx);
+                vertexNormal.push_back((float) ny);
+                vertexNormal.push_back((float) nz);
+
+                vertexNormal.push_back((float) tx);
+                vertexNormal.push_back((float) ty);
             }
             index_offset += fv;
         }
@@ -77,7 +96,7 @@ void ModelImporter::draw(glm::mat4 projectionTransform, glm::mat4 viewTransform)
     shader.setMat4("view", viewTransform);
     shader.setMat4("projection", projectionTransform);
 
-    glDrawArrays(GL_TRIANGLES, 0,(vertices.size()/6));
+    glDrawArrays(GL_TRIANGLES, 0,(vertices.size()/8));
 }
 
 ModelImporter::ModelImporter(glm::vec3 position, std::string &inputFile){
@@ -94,14 +113,14 @@ ModelImporter::ModelImporter(glm::vec3 position, std::string &inputFile){
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(float)*vertices.size(), &vertices[0], GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 6 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 8 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    //glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    //glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_TRUE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 
 }
 

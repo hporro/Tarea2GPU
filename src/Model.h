@@ -1,7 +1,3 @@
-//
-// Created by heini on 17-09-2019.
-//
-
 #ifndef TAREA2_MODEL_H
 #define TAREA2_MODEL_H
 

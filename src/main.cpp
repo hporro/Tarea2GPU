@@ -10,6 +10,7 @@
 #include "Core/Shader.h"
 #include "Camera/CenteredCamera.h"
 #include "Model.h"
+#include "Light.h"
 
 #include "Models/Lamp.h"
 #include "Models/Cube.h"
@@ -34,40 +35,59 @@ float lastX = SCR_WIDTH / 2.0f;
 float lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 
+//Camera
 CenteredCamera camera(glm::vec3(0.0f, 0.0f, 0.0f));
 
 //lighting
+Light *currLightN, *currLightM;
+
 glm::vec3 lightPos1(0.00001f, -4.0f, 0.0f);
 glm::vec3 lightPos2(0.00001f, 0.0f, -4.0f);
-glm::vec3 lightColor1(1.0f,1.0f,1.0f);
-glm::vec3 lightColor2(1.0f,1.0f,1.0f);
 
+Light l1s[4], l2s[4];
+
+//lights and camera movement parameters
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 
-//model
+//state machine
 bool firstChangeModel = true;
 bool firstChangeShader = true;
+bool firstChangeLightN = true;
+bool firstChangeLightM = true;
 int modelRendered = 0;
 int shaderRendered = 0;
+int lightRenderedN = 0;
+int lightRenderedM = 0;
 
 //models
 Sphere sphere;
 Cube cube;
+Piramid piramid;
+Tetrahedron tet;
+ModelImporter sword;
+
+//Shaders
 Shader* currShader;
 Shader phongShader;
 Shader normalMapShader;
 Shader toonShader;
 Shader shaders[3];
 
-//
+//project-view matrices
 glm::mat4 view;
 glm::mat4 projection;
 
 int main() {
     global_config();
+
     sphere = Sphere(glm::vec3(0.0,0.0,0.0));
     cube = Cube(glm::vec3(0.0,0.0,0.0));
+    piramid = Piramid(glm::vec3(0.0,0.0,0.0));
+    tet = Tetrahedron(glm::vec3(0.0,0.0,0.0));
+    std::string path = "../resources/suzanne.obj";
+    sword = ModelImporter(glm::vec3(0.0f,0.0f,0.0f),path);
+
     phongShader = Shader("../src/shaders/phong.vert", "../src/shaders/phong.frag");
     normalMapShader = Shader("../src/shaders/normalMapping.vert", "../src/shaders/normalMapping.frag");
     toonShader = Shader("../src/shaders/toon.vert", "../src/shaders/toon.frag");
@@ -80,10 +100,16 @@ int main() {
 
     sphere.addTexture(text,"normalMap");
     cube.addTexture(text,"normalMap");
+    piramid.addTexture(text,"normalMap");
+    tet.addTexture(text,"normalMap");
+    sword.addTexture(text,"normalMap");
 
     currShader = &shaders[shaderRendered];
     sphere.setShader(*currShader);
     cube.setShader(*currShader);
+    piramid.setShader(*currShader);
+    tet.setShader(*currShader);
+    sword.setShader(*currShader);
 
     Lamp lamp1 = Lamp(lightPos1);
     Shader lampShader1 = Shader("../src/shaders/vertex.vert", "../src/shaders/brightShader.frag");
@@ -92,6 +118,19 @@ int main() {
     Lamp lamp2 = Lamp(lightPos2);
     Shader lampShader2 = Shader("../src/shaders/vertex.vert", "../src/shaders/brightShader.frag");
     lamp2.setShader(lampShader2);
+
+    l1s[0] = Light(glm::vec3(1.0,1.0,1.0),glm::vec3(0.2f, 0.2f, 0.2f),glm::vec3(0.5f, 0.5f, 0.5f),glm::vec3(0.9f,0.9f,0.9f));
+    l1s[1] = Light(glm::vec3(0.0,0.0,1.0),glm::vec3(0.0f, 0.0f, 0.2f),glm::vec3(0.0f, 0.0f, 0.5f),glm::vec3(0.0f,0.0f,0.9f));
+    l1s[2] = Light(glm::vec3(1.0,0.0,0.0),glm::vec3(0.2f, 0.0f, 0.0f),glm::vec3(0.5f, 0.0f, 0.0f),glm::vec3(0.9f,0.0f,0.0f));
+    l1s[3] = Light(glm::vec3(0.0,1.0,0.0),glm::vec3(0.0f, 0.2f, 0.0f),glm::vec3(0.0f, 0.5f, 0.0f),glm::vec3(0.0f,0.9f,0.0f));
+
+    l2s[0] = Light(glm::vec3(1.0,1.0,1.0),glm::vec3(0.2f, 0.2f, 0.2f),glm::vec3(0.5f, 0.5f, 0.5f),glm::vec3(0.9f,0.9f,0.9f));
+    l2s[1] = Light(glm::vec3(0.0,0.0,1.0),glm::vec3(0.0f, 0.0f, 0.2f),glm::vec3(0.0f, 0.0f, 0.5f),glm::vec3(0.0f,0.0f,0.9f));
+    l2s[2] = Light(glm::vec3(1.0,0.0,0.0),glm::vec3(0.2f, 0.0f, 0.0f),glm::vec3(0.5f, 0.0f, 0.0f),glm::vec3(0.9f,0.0f,0.0f));
+    l2s[3] = Light(glm::vec3(0.0,1.0,0.0),glm::vec3(0.0f, 0.2f, 0.0f),glm::vec3(0.0f, 0.5f, 0.0f),glm::vec3(0.0f,0.9f,0.0f));
+
+    currLightN = &l1s[0];
+    currLightM = &l2s[0];
 
     while(!glfwWindowShouldClose(window)){
         float currentFrame = glfwGetTime();
@@ -108,19 +147,19 @@ int main() {
         lamp2.setPos(lightPos2);
 
         projection    = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+        projection = glm::perspective(glm::radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.2f, 40.0f);
 
         view = camera.GetViewMatrix();
 
         renderModel();
 
         lamp1.bind();
-        lampShader1.setVec3("lightColor", lightColor1);
+        lampShader1.setVec3("lightColor", currLightN->color);
         lamp1.draw(view, projection);
         lamp1.unbind();
 
         lamp2.bind();
-        lampShader2.setVec3("lightColor", lightColor2);
+        lampShader2.setVec3("lightColor", currLightM->color);
         lamp2.draw(view, projection);
         lamp2.unbind();
 
@@ -174,7 +213,7 @@ void processInput(){
     }
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS){
         if(firstChangeModel) {
-            modelRendered=(modelRendered+1)%2;
+            modelRendered=(modelRendered+1)%5;
             firstChangeModel = false;
         }
     }else{
@@ -189,6 +228,26 @@ void processInput(){
         }
     }else{
         firstChangeShader = true;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_N) == GLFW_PRESS){
+        if(firstChangeLightN) {
+            lightRenderedN = (lightRenderedN+1)%4;
+            firstChangeLightN = false;
+            currLightN = &l1s[lightRenderedN];
+        }
+    }else{
+        firstChangeLightN = true;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS){
+        if(firstChangeLightM) {
+            lightRenderedM = (lightRenderedM+1)%4;
+            firstChangeLightM = false;
+            currLightM = &l2s[lightRenderedM];
+        }
+    }else{
+        firstChangeLightM = true;
     }
 
     if(glfwGetKey(window, GLFW_KEY_RIGHT_BRACKET) == GLFW_PRESS){  // pluss in latinamerican spanish keyboard
@@ -270,56 +329,60 @@ void global_config(){
 }
 
 void renderModel(){
+
+    currShader->use();
+
+    currShader->setVec3("material.ambient", 0.5f, 0.25f, 0.15f);
+    currShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
+    currShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
+    currShader->setFloat("material.shininess", 64.0f);
+
+    currShader->setVec3("lights[0].color", currLightN->color);
+    currShader->setVec3("lights[0].position", lightPos1);
+    currShader->setVec3("lights[0].ambient", currLightN->ambient);
+    currShader->setVec3("lights[0].diffuse", currLightN->diffuse);
+    currShader->setVec3("lights[0].specular", currLightN->specular);
+
+    currShader->setVec3("lights[1].color", currLightM->color);
+    currShader->setVec3("lights[1].position", lightPos2);
+    currShader->setVec3("lights[1].ambient", currLightM->ambient);
+    currShader->setVec3("lights[1].diffuse", currLightM->diffuse);
+    currShader->setVec3("lights[1].specular", currLightM->specular);
+
+    currShader->setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
+
+    if(modelRendered == 1){
+        sword.setShader(*currShader);
+        sword.bind();
+        sword.draw(view, projection);
+        sword.unbind();
+    }
+
     if(modelRendered == 0){
         sphere.setShader(*currShader);
         sphere.bind();
-
-        currShader->setVec3("material.ambient", 0.5f, 0.25f, 0.15f);
-        currShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-        currShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-        currShader->setFloat("material.shininess", 64.0f);
-
-        currShader->setVec3("lights[0].color", lightColor1);
-        currShader->setVec3("lights[0].position", lightPos1);
-        currShader->setVec3("lights[0].ambient", 0.2f, 0.2f, 0.2f);
-        currShader->setVec3("lights[0].diffuse", 0.5f, 0.5f, 0.5f);
-        currShader->setVec3("lights[0].specular", 0.9f, 0.9f, 0.9f);
-
-        currShader->setVec3("lights[1].color", lightColor2);
-        currShader->setVec3("lights[1].position", lightPos2);
-        currShader->setVec3("lights[1].ambient", 0.2f, 0.2f, 0.2f);
-        currShader->setVec3("lights[1].diffuse", 0.5f, 0.5f, 0.5f);
-        currShader->setVec3("lights[1].specular", 0.9f, 0.9f, 0.9f);
-
-        currShader->setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
-
         sphere.draw(view, projection);
         sphere.unbind();
     }
-    if(modelRendered == 1){
+
+    if(modelRendered == 2){
         cube.setShader(*currShader);
         cube.bind();
-
-        currShader->setVec3("material.ambient", 0.5f, 0.25f, 0.15f);
-        currShader->setVec3("material.diffuse", 1.0f, 0.5f, 0.31f);
-        currShader->setVec3("material.specular", 0.5f, 0.5f, 0.5f);
-        currShader->setFloat("material.shininess", 64.0f);
-
-        currShader->setVec3("lights[0].color", lightColor1);
-        currShader->setVec3("lights[0].position", lightPos1);
-        currShader->setVec3("lights[0].ambient", 0.2f, 0.2f, 0.2f);
-        currShader->setVec3("lights[0].diffuse", 0.5f, 0.5f, 0.5f);
-        currShader->setVec3("lights[0].specular", 0.9f, 0.9f, 0.9f);
-
-        currShader->setVec3("lights[1].color", lightColor2);
-        currShader->setVec3("lights[1].position", lightPos2);
-        currShader->setVec3("lights[1].ambient", 0.2f, 0.2f, 0.2f);
-        currShader->setVec3("lights[1].diffuse", 0.5f, 0.5f, 0.5f);
-        currShader->setVec3("lights[1].specular", 0.9f, 0.9f, 0.9f);
-
-        currShader->setVec3("viewPos", camera.getCameraPosition().x,camera.getCameraPosition().y,camera.getCameraPosition().z);
-
         cube.draw(view, projection);
         cube.unbind();
+    }
+
+    if(modelRendered == 3){
+        piramid.setShader(*currShader);
+        piramid.bind();
+        piramid.draw(view, projection);
+        piramid.unbind();
+    }
+
+    if(modelRendered == 4){
+        tet.setShader(*currShader);
+        tet.bind();
+        tet.draw(view, projection);
+        tet.unbind();
     }
 }
