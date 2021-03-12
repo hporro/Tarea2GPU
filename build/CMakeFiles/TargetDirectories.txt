@@ -1,0 +1,4 @@
+/home/hporro/Documents/github/Tarea2GPU/build/CMakeFiles/edit_cache.dir
+/home/hporro/Documents/github/Tarea2GPU/build/CMakeFiles/rebuild_cache.dir
+/home/hporro/Documents/github/Tarea2GPU/build/CMakeFiles/PLAYGROUND.dir
+/home/hporro/Documents/github/Tarea2GPU/build/CMakeFiles/Tarea2.dir

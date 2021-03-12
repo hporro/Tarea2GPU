@@ -7,7 +7,7 @@
 
 #include "../../libs/stb_image.h"
 
-#include <glad/glad.h>
+#include <GL/glew.h>
 #include <iostream>
 
 class Texture{

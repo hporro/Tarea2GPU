@@ -1,11 +1,13 @@
 # Programa visualizador de shaders
 
-Opción E de la segunda tarea del curso CC7515-1 - Computación en GPU
-del departamento de computación de la Universidad de Chile, "Programa visualizador de shaders", desarrollada por el alumno Heinich Porro, entre agosto y septiembre del año 2019.
+Opción E de la segunda tarea del curso CC7515-1 - Computación en GPU del departamento de computación de la Universidad de Chile, "Programa visualizador de shaders", desarrollada por el alumno Heinich Porro, entre agosto y septiembre del año 2019.
+
+## Screenshots
+
+![cell shading](screenshots/cell_shading.png)
 
 ## Instalación
-Se utilizaron librerías simples que pueden ser compiladas por cmake, por lo que no hay nada especial que instalar (además de, quizás, el paquete dev-xorg en ubuntu).
-Se usó CLion para el desarrollo de la tarea.
+Se utilizaron librerías simples que pueden ser compiladas por cmake, más las librerías GLEW y GLFW, que tienen que estar instaladas previamente y ser visibles en el PATH.
 Es posible compilarla usando cmake, siguiendo la siguiente secuencia de comandos:
 
 Con una consola ubicada en la carpeta principal del proyecto, que llamaremos ${TAREA2} desde ahora, se llama el siguiente comando:
@@ -24,23 +26,23 @@ cmake ..
 Entonces, se usa make para generar el ejecutable de la tarea:
 
 ```
-make all
+make
 ```
 
-Entonces el ejecutable de la tarea, llamado Tarea2.exe o Tarea2, debe estar en la carpeta o en una carpeta dentro de la carpeta ${Tarea2}/build/Debug.
+Entonces el ejecutable de la tarea, llamado Tarea2.exe o Tarea2, debe estar en la carpeta o en una carpeta dentro de la carpeta ${Tarea2}/build.
 
 
 ## Herramientas utilizadas en el desarrollo de la tarea
 
 * [c++14](https://isocpp.org/wiki/faq/cpp14) - Lenguaje de programación utilizado.
-* [VS2017 Community](https://visualstudio.microsoft.com/vs/community/) - Se utilizó el compilador de visual studio 2017 community version (en el SO windows).
-* [CLion](https://www.jetbrains.com/clion/) - IDE de c++ utilizado para el desarrollo de la tarea.
+.
 * [CMake](https://cmake.org/) - CMake familia de herramientas de código abierto diseñadas para hacer building, testing y packaging de software.
 * [GLFW](https://www.glfw.org/) - is an Open Source, multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop.
-* [GLAD](https://github.com/Dav1dde/glad) - Multi-Language GL/GLES/EGL/GLX/WGL Loader-Generator based on the official specs.
+* [GLEW](http://glew.sourceforge.net/) - Cross-platform open-source C/C++ extension loading library.
 * [glm](https://glm.g-truc.net/) - Librería en c++ para el manejo de matrices y vectores.
 * [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) - Librería abierta en c++ para el manejo de archivos de imágenes.
 * [Bouml](https://bouml.fr/) - Herramienta utilizada para generar diagramas UML.
+* [tinyobjloader](https://github.com/tinyobjloader/tinyobjloader) - Tiny but powerful single file header only wavefront obj loader written in C++03.
 
 ## Versionamiento
 

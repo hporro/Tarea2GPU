@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/Tarea2.dir/src/main.cpp.o -o Tarea2  -lglfw -lGLEW -lGL 
